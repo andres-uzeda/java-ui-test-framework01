@@ -4,6 +4,9 @@ FROM openjdk:8-jdk-alpine AS builder
 LABEL template_creator="Miguel Doctor <migueldoctor@gmail.com>"
 LABEL maintainer="Andres Uzeda <andres.uzeda@niceincontact.com>"
 
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" > /etc/apk/repositories
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
+RUN apk update
 # 0- Install requirements to linux
 RUN apk add --no-cache curl tar bash procps nano vim
 
@@ -39,7 +42,9 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
 ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
-#TODO add chrome driver
+# 7- Install Chrome and WebDriver
+RUN apk add chromium=92.0.4515.107-r0
+RUN apk add chromium-chromedriver=92.0.4515.107-r0
 
-# 7- Copy Test Framework
+# 8- Copy Test Framework
 COPY . /test-framework
