@@ -4,9 +4,11 @@ FROM openjdk:8-jdk-alpine AS builder
 LABEL template_creator="Miguel Doctor <migueldoctor@gmail.com>"
 LABEL maintainer="Andres Uzeda <andres.uzeda@niceincontact.com>"
 
+# Update repositories
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" > /etc/apk/repositories
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
 RUN apk update
+
 # 0- Install requirements to linux
 RUN apk add --no-cache curl tar bash procps nano vim
 
